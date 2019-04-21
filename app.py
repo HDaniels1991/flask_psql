@@ -4,13 +4,18 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import (StringField,SubmitField,IntegerField)
 from wtforms.validators import DataRequired
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecretkey'
 # Connects our Flask App to our Database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/my_website'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db = SQLAlchemy(app)
+
+# Add on migration capabilities in order to run terminal commands
+Migrate(app,db)
 
 ################
 #####MODELS#####
@@ -22,13 +27,15 @@ class Person(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first = db.Column(db.Text)
     last = db.Column(db.Text)
+    age = db.Column(db.Integer)
 
-    def __init__(self, first,last):
+    def __init__(self, first,last,age):
         self.first = first
         self.last = last
+        self.age = age
 
     def __repr__(self):
-        return f"Person {self.id}: {self.first} {self.last}"
+        return f"Person {self.id}: {self.first} {self.last} {self.age}"
 
 ################
 #####FORMS######
@@ -37,6 +44,7 @@ class Person(db.Model):
 class AddForm(FlaskForm):
     first = StringField('First Name',validators=[DataRequired()])
     last = StringField('Last Name',validators=[DataRequired()])
+    age = IntegerField('Age',validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 class DelForm(FlaskForm):
@@ -57,7 +65,8 @@ def add():
     if form.validate_on_submit():
         first = form.first.data
         last = form.last.data
-        new_person = Person(first=first,last=last)
+        age = form.age.data
+        new_person = Person(first=first,last=last,age=age)
         db.session.add(new_person)
         db.session.commit()
         return redirect(url_for('list_people'))
