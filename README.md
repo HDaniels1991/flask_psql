@@ -9,3 +9,10 @@ This is a simple app to demonstrate how you might create a Flask application lin
 ## Author
 
 Harry Daniels
+
+## Next steps
+
+* Blueprint application.
+* Use Flask script and Manager to handle DB Migrations.
+* Use instance based configuration.
+* Dockerize application.

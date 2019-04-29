@@ -29,6 +29,7 @@ class Person(db.Model):
     last = db.Column(db.Text)
     age = db.Column(db.Integer)
 
+
     def __init__(self, first,last,age):
         self.first = first
         self.last = last
