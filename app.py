@@ -6,11 +6,10 @@ from wtforms import (StringField,SubmitField,IntegerField)
 from wtforms.validators import DataRequired
 from flask_migrate import Migrate
 
+import config
+
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'mysecretkey'
-# Connects our Flask App to our Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/my_website'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config.from_object('config.Config')
 
 db = SQLAlchemy(app)
 
@@ -28,7 +27,6 @@ class Person(db.Model):
     first = db.Column(db.Text)
     last = db.Column(db.Text)
     age = db.Column(db.Integer)
-
 
     def __init__(self, first,last,age):
         self.first = first
