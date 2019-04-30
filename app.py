@@ -5,37 +5,18 @@ from flask_wtf import FlaskForm
 from wtforms import (StringField,SubmitField,IntegerField)
 from wtforms.validators import DataRequired
 from flask_migrate import Migrate
-
-import config
+from models import db
 
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_object('config.Default')
 app.config.from_pyfile('config.py')
+db.init_app(app)
 
-db = SQLAlchemy(app)
+#Import Person
+from models import Person
 
 # Add on migration capabilities in order to run terminal commands
 Migrate(app,db)
-
-################
-#####MODELS#####
-################
-
-# Create our database model
-class Person(db.Model):
-    __tablename__ = "users"
-    id = db.Column(db.Integer, primary_key=True)
-    first = db.Column(db.Text)
-    last = db.Column(db.Text)
-    age = db.Column(db.Integer)
-
-    def __init__(self, first,last,age):
-        self.first = first
-        self.last = last
-        self.age = age
-
-    def __repr__(self):
-        return f"Person {self.id}: {self.first} {self.last} {self.age}"
 
 ################
 #####FORMS######
