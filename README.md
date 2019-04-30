@@ -16,3 +16,4 @@ Harry Daniels
 * Use Flask script and Manager to handle DB Migrations.
 * Use instance based configuration.
 * Dockerize application.
+* Unit testing
