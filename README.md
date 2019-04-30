@@ -12,8 +12,8 @@ Harry Daniels
 
 ## Next steps
 
-* Blueprint application.
-* Use Flask script and Manager to handle DB Migrations.
+* Restructure application, models etc.
 * Use instance based configuration.
+
 * Dockerize application.
 * Unit testing
