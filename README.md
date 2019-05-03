@@ -12,8 +12,5 @@ Harry Daniels
 
 ## Next steps
 
-* Restructure application, models etc.
-* Use instance based configuration.
-
-* Dockerize application.
+* forms.py
 * Unit testing

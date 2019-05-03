@@ -1,21 +1,13 @@
 from flask import Flask, render_template, url_for, request, redirect
-from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import (StringField,SubmitField,IntegerField)
 from wtforms.validators import DataRequired
-from flask_migrate import Migrate
-from models import db
+from models import *
 
 app = Flask(__name__, instance_relative_config=True)
-app.config.from_object('config.Default')
-app.config.from_pyfile('config.py')
+app.config.from_object('config.Default') #object config
+app.config.from_pyfile('config.py') #instance config i.e. secrets
 db.init_app(app)
-
-#Import Person
-from models import Person
-
-# Add on migration capabilities in order to run terminal commands
-Migrate(app,db)
 
 ################
 #####FORMS######
